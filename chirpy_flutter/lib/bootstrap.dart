@@ -6,6 +6,8 @@ import 'package:chirpy_client/chirpy_client.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
+import 'package:chirpy_flutter/dependency_injection.dart';
+
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
 
@@ -27,12 +29,10 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  var client = Client('http://$localhost:8080/')
-    ..connectivityMonitor = FlutterConnectivityMonitor();
-
   Bloc.observer = const AppBlocObserver();
 
   // Add cross-flavor configuration here
 
+  configureDependencies();
   runApp(await builder());
 }

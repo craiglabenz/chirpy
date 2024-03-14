@@ -1,0 +1,31 @@
+name: chirpy_flutter
+description: A Very Good Project created by Very Good CLI.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: "^3.3.0"
+
+dependencies:
+  bloc: ^8.1.3
+  chirpy_client:
+    path: ../chirpy_client
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.4
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.18.1
+  serverpod_flutter: 1.2.5
+
+dev_dependencies:
+  bloc_test: ^9.1.6
+  build_runner: ^2.4.8
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.3
+  very_good_analysis: ^5.1.0
+
+flutter:
+  uses-material-design: true
+  generate: true

@@ -1,0 +1,19 @@
+{
+  "moduleName": "chirpy",
+  "tables": [],
+  "installedModules": [
+    {
+      "module": "serverpod",
+      "version": "20240115074235544"
+    },
+    {
+      "module": "serverpod_auth",
+      "version": "20240115074239642"
+    },
+    {
+      "module": "chirpy",
+      "version": "20240314161915884"
+    }
+  ],
+  "migrationApiVersion": 1
+}

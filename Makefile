@@ -12,8 +12,9 @@ server:
 	cd chirpy_server && dart bin/main.dart
 
 # Flutter app
-app_build:
+build:
 	cd chirpy_flutter && dart run build_runner build --delete-conflicting-outputs
+	cd chirpy_flutter && flutter pub get
 	
 app:
 	cd chirpy_flutter && flutter run -d macos --target lib/main_development.dart

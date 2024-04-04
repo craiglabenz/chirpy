@@ -307,9 +307,10 @@ class __$$TimelineStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TimelineStateImpl implements _TimelineState {
+class _$TimelineStateImpl extends _TimelineState {
   const _$TimelineStateImpl({required final List<Post> posts, this.error})
-      : _posts = posts;
+      : _posts = posts,
+        super._();
 
   final List<Post> _posts;
   @override
@@ -347,10 +348,11 @@ class _$TimelineStateImpl implements _TimelineState {
       __$$TimelineStateImplCopyWithImpl<_$TimelineStateImpl>(this, _$identity);
 }
 
-abstract class _TimelineState implements TimelineState {
+abstract class _TimelineState extends TimelineState {
   const factory _TimelineState(
       {required final List<Post> posts,
       final TimelineError? error}) = _$TimelineStateImpl;
+  const _TimelineState._() : super._();
 
   @override
   List<Post> get posts;

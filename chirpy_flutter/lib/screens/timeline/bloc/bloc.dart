@@ -10,14 +10,8 @@ class TimelineError {}
 class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   TimelineBloc(this.repo, super.initialState) {
     on<TimelineEvent>(
-      (TimelineEvent e, emit) => e.map(
-        save: (SavePostEvent event) => savePost(event, emit),
-      ),
+      (TimelineEvent e, emit) {},
     );
-  }
-
-  Future<void> savePost(SavePostEvent event, Emitter emit) async {
-    await repo.save(PostWrapper(event.post));
   }
 
   // Future<void> loadPosts(LoadPostsEvent event, Emitter emit) async {
@@ -44,4 +38,7 @@ class TimelineState with _$TimelineState {
     required List<Post> posts,
     TimelineError? error,
   }) = _TimelineState;
+  const TimelineState._();
+
+  factory TimelineState.initial() => const TimelineState(posts: []);
 }

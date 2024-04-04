@@ -3,6 +3,6 @@ import 'package:serverpod/serverpod.dart';
 
 class PostEndpoint extends Endpoint {
   Future<Post> save(Session session, Post item) async {
-    throw Exception();
+    return Post.db.insertRow(session, item);
   }
 }

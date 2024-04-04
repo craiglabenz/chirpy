@@ -1,28 +1,27 @@
 import 'package:chirpy_client/chirpy_client.dart';
+import 'package:chirpy_flutter/data/data.dart';
+import 'package:injectable/injectable.dart';
 
-import 'data.dart';
-
-class PostWrapper extends ModelWrapper {
-  PostWrapper(this.post);
-
-  final Post post;
+class PostBindings extends ModelBindings<Post> {
+  const PostBindings();
 
   @override
-  int? get id => post.id;
+  int? getId(Post obj) => obj.id;
 
   @override
-  Map<String, Object?> toJson() => post.toJson();
+  Map<String, Object?> toJson(Post obj) => obj.toJson();
+
+  @override
+  Post fromJson(Map<String, Object?> json) => Post.fromJson(json, Protocol());
 }
 
-class PostRepository extends Repository<PostWrapper> {
-  PostRepository(this.client)
-      : super(
-          fromJson: (json) => PostWrapper(Post.fromJson(json, Protocol())),
-        );
+@Singleton()
+class PostRepository extends Repository<Post> {
+  PostRepository(this.client) : super(bindings: const PostBindings());
   final Client client;
 
   @override
-  Future<PostWrapper> persist(PostWrapper item) async {
-    return PostWrapper(await client.post.save(item.post));
+  Future<Post> persist(Post item) async {
+    return client.post.save(item);
   }
 }

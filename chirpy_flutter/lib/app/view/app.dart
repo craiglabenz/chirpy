@@ -1,5 +1,5 @@
 import 'package:chirpy_flutter/l10n/l10n.dart';
-import 'package:chirpy_flutter/login/login.dart';
+import 'package:chirpy_flutter/screens/timeline/timeline.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const LoginPage(),
+      home: const TimelinePage(),
     );
   }
 }

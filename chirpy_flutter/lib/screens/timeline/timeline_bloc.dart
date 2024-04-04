@@ -3,33 +3,36 @@ import 'package:chirpy_flutter/data/post_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'bloc.freezed.dart';
+part 'timeline_bloc.freezed.dart';
 
 class TimelineError {}
 
 class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   TimelineBloc(this.repo, super.initialState) {
     on<TimelineEvent>(
-      (TimelineEvent e, emit) {},
+      (TimelineEvent e, emit) => e.map(load: (e) => _loadTimeline(e, emit)),
     );
   }
 
-  // Future<void> loadPosts(LoadPostsEvent event, Emitter emit) async {
-  //   final posts = await repo.list();
-  //   emit(
-  //     state.copyWith(
-  //       posts: posts,
-  //       error: null,
-  //     ),
-  //   );
-  // }
+  Future<void> _loadTimeline(
+    LoadTimelineEvent event,
+    Emitter<TimelineState> emit,
+  ) async {
+    final posts = await repo.list();
+    emit(
+      state.copyWith(
+        posts: posts,
+        error: null,
+      ),
+    );
+  }
 
   final PostRepository repo;
 }
 
 @Freezed()
 class TimelineEvent with _$TimelineEvent {
-  const factory TimelineEvent.save(Post post) = SavePostEvent;
+  const factory TimelineEvent.load() = LoadTimelineEvent;
 }
 
 @Freezed()

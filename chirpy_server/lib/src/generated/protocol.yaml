@@ -2,3 +2,4 @@ example:
   - hello:
 post:
   - save:
+  - list:

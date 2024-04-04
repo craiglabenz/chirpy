@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'bloc.dart';
+part of 'timeline_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,42 +16,37 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TimelineEvent {
-  Post get post => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Post post) save,
+    required TResult Function() load,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Post post)? save,
+    TResult? Function()? load,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Post post)? save,
+    TResult Function()? load,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(SavePostEvent value) save,
+    required TResult Function(LoadTimelineEvent value) load,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(SavePostEvent value)? save,
+    TResult? Function(LoadTimelineEvent value)? load,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(SavePostEvent value)? save,
+    TResult Function(LoadTimelineEvent value)? load,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $TimelineEventCopyWith<TimelineEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +55,6 @@ abstract class $TimelineEventCopyWith<$Res> {
   factory $TimelineEventCopyWith(
           TimelineEvent value, $Res Function(TimelineEvent) then) =
       _$TimelineEventCopyWithImpl<$Res, TimelineEvent>;
-  @useResult
-  $Res call({Post post});
 }
 
 /// @nodoc
@@ -73,108 +66,67 @@ class _$TimelineEventCopyWithImpl<$Res, $Val extends TimelineEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? post = null,
-  }) {
-    return _then(_value.copyWith(
-      post: null == post
-          ? _value.post
-          : post // ignore: cast_nullable_to_non_nullable
-              as Post,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$SavePostEventImplCopyWith<$Res>
-    implements $TimelineEventCopyWith<$Res> {
-  factory _$$SavePostEventImplCopyWith(
-          _$SavePostEventImpl value, $Res Function(_$SavePostEventImpl) then) =
-      __$$SavePostEventImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({Post post});
+abstract class _$$LoadTimelineEventImplCopyWith<$Res> {
+  factory _$$LoadTimelineEventImplCopyWith(_$LoadTimelineEventImpl value,
+          $Res Function(_$LoadTimelineEventImpl) then) =
+      __$$LoadTimelineEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SavePostEventImplCopyWithImpl<$Res>
-    extends _$TimelineEventCopyWithImpl<$Res, _$SavePostEventImpl>
-    implements _$$SavePostEventImplCopyWith<$Res> {
-  __$$SavePostEventImplCopyWithImpl(
-      _$SavePostEventImpl _value, $Res Function(_$SavePostEventImpl) _then)
+class __$$LoadTimelineEventImplCopyWithImpl<$Res>
+    extends _$TimelineEventCopyWithImpl<$Res, _$LoadTimelineEventImpl>
+    implements _$$LoadTimelineEventImplCopyWith<$Res> {
+  __$$LoadTimelineEventImplCopyWithImpl(_$LoadTimelineEventImpl _value,
+      $Res Function(_$LoadTimelineEventImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? post = null,
-  }) {
-    return _then(_$SavePostEventImpl(
-      null == post
-          ? _value.post
-          : post // ignore: cast_nullable_to_non_nullable
-              as Post,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$SavePostEventImpl implements SavePostEvent {
-  const _$SavePostEventImpl(this.post);
-
-  @override
-  final Post post;
+class _$LoadTimelineEventImpl implements LoadTimelineEvent {
+  const _$LoadTimelineEventImpl();
 
   @override
   String toString() {
-    return 'TimelineEvent.save(post: $post)';
+    return 'TimelineEvent.load()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SavePostEventImpl &&
-            (identical(other.post, post) || other.post == post));
+        (other.runtimeType == runtimeType && other is _$LoadTimelineEventImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, post);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SavePostEventImplCopyWith<_$SavePostEventImpl> get copyWith =>
-      __$$SavePostEventImplCopyWithImpl<_$SavePostEventImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Post post) save,
+    required TResult Function() load,
   }) {
-    return save(post);
+    return load();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Post post)? save,
+    TResult? Function()? load,
   }) {
-    return save?.call(post);
+    return load?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Post post)? save,
+    TResult Function()? load,
     required TResult orElse(),
   }) {
-    if (save != null) {
-      return save(post);
+    if (load != null) {
+      return load();
     }
     return orElse();
   }
@@ -182,41 +134,34 @@ class _$SavePostEventImpl implements SavePostEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(SavePostEvent value) save,
+    required TResult Function(LoadTimelineEvent value) load,
   }) {
-    return save(this);
+    return load(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(SavePostEvent value)? save,
+    TResult? Function(LoadTimelineEvent value)? load,
   }) {
-    return save?.call(this);
+    return load?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(SavePostEvent value)? save,
+    TResult Function(LoadTimelineEvent value)? load,
     required TResult orElse(),
   }) {
-    if (save != null) {
-      return save(this);
+    if (load != null) {
+      return load(this);
     }
     return orElse();
   }
 }
 
-abstract class SavePostEvent implements TimelineEvent {
-  const factory SavePostEvent(final Post post) = _$SavePostEventImpl;
-
-  @override
-  Post get post;
-  @override
-  @JsonKey(ignore: true)
-  _$$SavePostEventImplCopyWith<_$SavePostEventImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class LoadTimelineEvent implements TimelineEvent {
+  const factory LoadTimelineEvent() = _$LoadTimelineEventImpl;
 }
 
 /// @nodoc

@@ -17,6 +17,7 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
     Emitter<NewPostState> emit,
   ) async {
     final savedPost = await repo.save(event.item);
+    emit(state.copyWith(item: savedPost));
   }
 
   final PostRepository repo;
@@ -29,7 +30,7 @@ class NewPostEvent with _$NewPostEvent {
 
 @Freezed()
 class NewPostState with _$NewPostState {
-  const factory NewPostState({String? body}) = _NewPostState;
+  const factory NewPostState({Post? item}) = _NewPostState;
   const NewPostState._();
 
   factory NewPostState.initial() => const NewPostState();

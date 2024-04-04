@@ -41,6 +41,13 @@ class EndpointPost extends _i1.EndpointRef {
         'save',
         {'item': item},
       );
+
+  _i2.Future<List<_i3.Post>> list() =>
+      caller.callServerEndpoint<List<_i3.Post>>(
+        'post',
+        'list',
+        {},
+      );
 }
 
 class _Modules {

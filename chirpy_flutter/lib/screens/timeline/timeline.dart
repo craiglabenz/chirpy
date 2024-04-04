@@ -1,2 +1,2 @@
-export 'bloc/bloc.dart';
-export 'view/view.dart';
+export 'timeline_bloc.dart';
+export 'timeline_view.dart';

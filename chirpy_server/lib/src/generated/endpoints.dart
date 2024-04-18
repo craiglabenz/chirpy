@@ -12,7 +12,8 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/example_endpoint.dart' as _i2;
 import '../endpoints/post_endpoint.dart' as _i3;
 import 'package:chirpy_server/src/generated/post.dart' as _i4;
-import 'package:serverpod_auth_server/module.dart' as _i5;
+import 'package:chirpy_shared/src/data/filters.dart' as _i5;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i6;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -79,15 +80,24 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
         'list': _i1.MethodConnector(
           name: 'list',
-          params: {},
+          params: {
+            'filter': _i1.ParameterDescription(
+              name: 'filter',
+              type: _i1.getType<_i5.Filter<_i4.Post>?>(),
+              nullable: true,
+            )
+          },
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['post'] as _i3.PostEndpoint).list(session),
+              (endpoints['post'] as _i3.PostEndpoint).list(
+            session,
+            params['filter'],
+          ),
         ),
       },
     );
-    modules['serverpod_auth'] = _i5.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i6.Endpoints()..initializeEndpoints(server);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:chirpy_client/chirpy_client.dart';
+import 'package:chirpy_shared/chirpy_shared.dart';
 
 abstract class ModelBindings<T> {
   const ModelBindings();
@@ -33,6 +34,19 @@ abstract class Repository<T> {
     return _localCache.values.toList()..sort(bindings.sortDesc);
   }
 
+  // TODO: actually pull from _localCache
+  DateTime? get maxCreatedAt => DateTime.now();
+
+  Future<List<T>> refresh() async {
+    final newItems = await loadRefresh();
+    for (final item in newItems) {
+      _localCache[bindings.getId(item)!] = item;
+    }
+    // TODO: maybe sort these when we cache and not every read
+    return _localCache.values.toList()..sort(bindings.sortDesc);
+  }
+
   Future<T> persist(T item);
-  Future<List<T>> load();
+  Future<List<T>> load([Filter<T>? filter]);
+  Future<List<T>> loadRefresh();
 }

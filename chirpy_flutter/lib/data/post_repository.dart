@@ -1,5 +1,6 @@
 import 'package:chirpy_client/chirpy_client.dart';
 import 'package:chirpy_flutter/data/data.dart';
+import 'package:chirpy_shared/chirpy_shared.dart';
 import 'package:injectable/injectable.dart';
 
 class PostBindings extends ModelBindings<Post> {
@@ -29,7 +30,12 @@ class PostRepository extends Repository<Post> {
   }
 
   @override
-  Future<List<Post>> load() {
-    return client.post.list();
+  Future<List<Post>> load([Filter<Post>? filter]) {
+    return client.post.list(filter);
   }
+
+  @override
+  Future<List<Post>> loadRefresh() => load(
+        maxCreatedAt != null ? PostFilter.createdAfter(maxCreatedAt!) : null,
+      );
 }

@@ -13,7 +13,8 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'example.dart' as _i2;
 import 'post.dart' as _i3;
 import 'package:chirpy_client/src/protocol/post.dart' as _i4;
-import 'package:serverpod_auth_client/module.dart' as _i5;
+import 'package:chirpy_shared/chirpy_shared.dart' as _i5;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i6;
 export 'example.dart';
 export 'post.dart';
 export 'client.dart';
@@ -52,8 +53,20 @@ class Protocol extends _i1.SerializationManager {
       return (data as List).map((e) => deserialize<_i4.Post>(e)).toList()
           as dynamic;
     }
+    if (t == _i5.Filter) {
+      return _i5.Filter.fromJson(data, this) as T;
+    }
+    if (t == _i5.PostFilter) {
+      return _i5.PostFilter.fromJson(data, this) as T;
+    }
+    if (t == _i1.getType<_i5.Filter?>()) {
+      return (data != null ? _i5.Filter.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i5.PostFilter?>()) {
+      return (data != null ? _i5.PostFilter.fromJson(data, this) : null) as T;
+    }
     try {
-      return _i5.Protocol().deserialize<T>(data, t);
+      return _i6.Protocol().deserialize<T>(data, t);
     } catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -61,9 +74,15 @@ class Protocol extends _i1.SerializationManager {
   @override
   String? getClassNameForObject(Object data) {
     String? className;
-    className = _i5.Protocol().getClassNameForObject(data);
+    className = _i6.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
+    }
+    if (data is _i5.Filter) {
+      return 'Filter';
+    }
+    if (data is _i5.PostFilter) {
+      return 'PostFilter';
     }
     if (data is _i2.Example) {
       return 'Example';
@@ -78,7 +97,13 @@ class Protocol extends _i1.SerializationManager {
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
-      return _i5.Protocol().deserializeByClassName(data);
+      return _i6.Protocol().deserializeByClassName(data);
+    }
+    if (data['className'] == 'Filter') {
+      return deserialize<_i5.Filter>(data['data']);
+    }
+    if (data['className'] == 'PostFilter') {
+      return deserialize<_i5.PostFilter>(data['data']);
     }
     if (data['className'] == 'Example') {
       return deserialize<_i2.Example>(data['data']);

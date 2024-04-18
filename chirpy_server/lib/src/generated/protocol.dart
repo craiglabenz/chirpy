@@ -11,10 +11,11 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:serverpod/protocol.dart' as _i2;
-import 'package:serverpod_auth_server/module.dart' as _i3;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 import 'example.dart' as _i4;
 import 'post.dart' as _i5;
 import 'package:chirpy_server/src/generated/post.dart' as _i6;
+import 'package:chirpy_shared/chirpy_shared.dart' as _i7;
 export 'example.dart';
 export 'post.dart';
 
@@ -36,7 +37,7 @@ class Protocol extends _i1.SerializationManagerServer {
       columns: [
         _i2.ColumnDefinition(
           name: 'id',
-          columnType: _i2.ColumnType.integer,
+          columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int?',
           columnDefault: 'nextval(\'post_id_seq\'::regclass)',
@@ -120,6 +121,18 @@ class Protocol extends _i1.SerializationManagerServer {
       return (data as List).map((e) => deserialize<_i6.Post>(e)).toList()
           as dynamic;
     }
+    if (t == _i7.Filter) {
+      return _i7.Filter.fromJson(data, this) as T;
+    }
+    if (t == _i7.PostFilter) {
+      return _i7.PostFilter.fromJson(data, this) as T;
+    }
+    if (t == _i1.getType<_i7.Filter?>()) {
+      return (data != null ? _i7.Filter.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i7.PostFilter?>()) {
+      return (data != null ? _i7.PostFilter.fromJson(data, this) : null) as T;
+    }
     try {
       return _i3.Protocol().deserialize<T>(data, t);
     } catch (_) {}
@@ -136,6 +149,12 @@ class Protocol extends _i1.SerializationManagerServer {
     if (className != null) {
       return 'serverpod_auth.$className';
     }
+    if (data is _i7.Filter) {
+      return 'Filter';
+    }
+    if (data is _i7.PostFilter) {
+      return 'PostFilter';
+    }
     if (data is _i4.Example) {
       return 'Example';
     }
@@ -150,6 +169,12 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
       return _i3.Protocol().deserializeByClassName(data);
+    }
+    if (data['className'] == 'Filter') {
+      return deserialize<_i7.Filter>(data['data']);
+    }
+    if (data['className'] == 'PostFilter') {
+      return deserialize<_i7.PostFilter>(data['data']);
     }
     if (data['className'] == 'Example') {
       return deserialize<_i4.Example>(data['data']);

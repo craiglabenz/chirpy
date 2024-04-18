@@ -11,8 +11,9 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:chirpy_client/src/protocol/post.dart' as _i3;
-import 'package:serverpod_auth_client/module.dart' as _i4;
-import 'protocol.dart' as _i5;
+import 'package:chirpy_shared/src/data/filters.dart' as _i4;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i5;
+import 'protocol.dart' as _i6;
 
 /// {@category Endpoint}
 class EndpointExample extends _i1.EndpointRef {
@@ -42,20 +43,20 @@ class EndpointPost extends _i1.EndpointRef {
         {'item': item},
       );
 
-  _i2.Future<List<_i3.Post>> list() =>
+  _i2.Future<List<_i3.Post>> list([_i4.Filter<_i3.Post>? filter]) =>
       caller.callServerEndpoint<List<_i3.Post>>(
         'post',
         'list',
-        {},
+        {'filter': filter},
       );
 }
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i4.Caller(client);
+    auth = _i5.Caller(client);
   }
 
-  late final _i4.Caller auth;
+  late final _i5.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {
@@ -65,13 +66,21 @@ class Client extends _i1.ServerpodClient {
     _i1.AuthenticationKeyManager? authenticationKeyManager,
     Duration? streamingConnectionTimeout,
     Duration? connectionTimeout,
+    Function(
+      _i1.MethodCallContext,
+      Object,
+      StackTrace,
+    )? onFailedCall,
+    Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
-          _i5.Protocol(),
+          _i6.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
           connectionTimeout: connectionTimeout,
+          onFailedCall: onFailedCall,
+          onSucceededCall: onSucceededCall,
         ) {
     example = EndpointExample(this);
     post = EndpointPost(this);

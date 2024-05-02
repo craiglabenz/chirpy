@@ -1,20 +1,20 @@
 # Server
-generate:
+server/build:
 	cd chirpy_server && serverpod generate
 
-migration:
+server/migration:
 	cd chirpy_server && serverpod create-migration
 
-migrate:
+server/migrate:
 	cd chirpy_server && dart bin/main.dart --role maintenance --apply-migrations
 
-server:
+server/run:
 	cd chirpy_server && dart bin/main.dart
 
 # Flutter app
-build:
+app/build:
 	cd chirpy_flutter && dart run build_runner build --delete-conflicting-outputs
 	cd chirpy_flutter && flutter pub get
 	
-app:
+app/run:
 	cd chirpy_flutter && flutter run -d macos --target lib/main_development.dart

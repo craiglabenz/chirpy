@@ -121,17 +121,11 @@ class Protocol extends _i1.SerializationManagerServer {
       return (data as List).map((e) => deserialize<_i6.Post>(e)).toList()
           as dynamic;
     }
-    if (t == _i7.Filter) {
-      return _i7.Filter.fromJson(data, this) as T;
-    }
     if (t == _i7.PostFilter) {
-      return _i7.PostFilter.fromJson(data, this) as T;
-    }
-    if (t == _i1.getType<_i7.Filter?>()) {
-      return (data != null ? _i7.Filter.fromJson(data, this) : null) as T;
+      return _i7.PostFilter.fromJson(data) as T;
     }
     if (t == _i1.getType<_i7.PostFilter?>()) {
-      return (data != null ? _i7.PostFilter.fromJson(data, this) : null) as T;
+      return (data != null ? _i7.PostFilter.fromJson(data) : null) as T;
     }
     try {
       return _i3.Protocol().deserialize<T>(data, t);
@@ -148,9 +142,6 @@ class Protocol extends _i1.SerializationManagerServer {
     className = _i3.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
-    }
-    if (data is _i7.Filter) {
-      return 'Filter';
     }
     if (data is _i7.PostFilter) {
       return 'PostFilter';
@@ -169,9 +160,6 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'].startsWith('serverpod_auth.')) {
       data['className'] = data['className'].substring(15);
       return _i3.Protocol().deserializeByClassName(data);
-    }
-    if (data['className'] == 'Filter') {
-      return deserialize<_i7.Filter>(data['data']);
     }
     if (data['className'] == 'PostFilter') {
       return deserialize<_i7.PostFilter>(data['data']);

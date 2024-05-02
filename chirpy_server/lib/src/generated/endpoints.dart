@@ -83,7 +83,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'filter': _i1.ParameterDescription(
               name: 'filter',
-              type: _i1.getType<_i5.Filter<_i4.Post>?>(),
+              type: _i1.getType<_i5.PostFilter?>(),
               nullable: true,
             )
           },

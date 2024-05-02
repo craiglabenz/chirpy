@@ -43,7 +43,7 @@ class EndpointPost extends _i1.EndpointRef {
         {'item': item},
       );
 
-  _i2.Future<List<_i3.Post>> list([_i4.Filter<_i3.Post>? filter]) =>
+  _i2.Future<List<_i3.Post>> list([_i4.PostFilter? filter]) =>
       caller.callServerEndpoint<List<_i3.Post>>(
         'post',
         'list',

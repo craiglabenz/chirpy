@@ -7,5 +7,4 @@ modules:
     nickname: auth
 
 extraClasses:
-  - package:chirpy_shared/chirpy_shared.dart:Filter
   - package:chirpy_shared/chirpy_shared.dart:PostFilter

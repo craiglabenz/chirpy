@@ -8,7 +8,7 @@ class PostEndpoint extends Endpoint {
     return Post.db.insertRow(session, item);
   }
 
-  Future<List<Post>> list(Session session, [Filter<Post>? filter]) async {
+  Future<List<Post>> list(Session session, [PostFilter? filter]) async {
     return Post.db.find(
       session,
       where: filter != null ? (_) => filter.expression : null,

@@ -1,4 +1,3 @@
-import 'package:chirpy_client/chirpy_client.dart';
 import 'package:chirpy_shared/chirpy_shared.dart';
 
 abstract class ModelBindings<T> {
@@ -25,8 +24,8 @@ abstract class Repository<T> {
     return savedItem;
   }
 
-  Future<List<T>> list() async {
-    final items = await load();
+  Future<List<T>> list([Filter? filter]) async {
+    final items = await load(filter);
     for (final item in items) {
       _localCache[bindings.getId(item)!] = item;
     }
@@ -47,6 +46,6 @@ abstract class Repository<T> {
   }
 
   Future<T> persist(T item);
-  Future<List<T>> load([Filter<T>? filter]);
+  Future<List<T>> load([Filter? filter]);
   Future<List<T>> loadRefresh();
 }

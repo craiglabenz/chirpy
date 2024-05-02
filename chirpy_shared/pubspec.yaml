@@ -1,7 +1,7 @@
 name: chirpy_shared
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
-upload_to: none
+publish_to: none
 # repository: https://github.com/my_org/my_repo
 environment:
   sdk: "^3.3.0"

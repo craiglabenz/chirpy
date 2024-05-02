@@ -2,12 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:chirpy_client/chirpy_client.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
-import 'package:serverpod_flutter/serverpod_flutter.dart';
-
 import 'package:chirpy_flutter/dependency_injection.dart';
 
 class AppBlocObserver extends BlocObserver {

@@ -2,38 +2,37 @@ import 'package:chirpy_server/src/generated/protocol.dart';
 import 'package:chirpy_shared/chirpy_shared.dart';
 import 'package:serverpod/serverpod.dart';
 
-extension FilterExpression<T> on Filter<T> {
+enum BooleanLogic { and, or }
+
+extension FilterExpression on Filter {
   Expression get expression {
-    if (this is ComboFilter<T>) {
-      return (this as ComboFilter).expression;
-    } else if (this is PostFilter) {
-      return (this as PostFilter).expression;
-    }
-    throw Exception('Unexpected type of filter: $runtimeType');
+    return switch (this) {
+      PostFilter f => f.expression,
+    };
   }
 }
 
-extension on ComboFilter {
-  Expression get expression {
-    Expression? expression;
-    for (final child in children) {
-      if (expression != null) {
-        expression = child.expression;
-      } else {
-        expression = switch (operator) {
-          BooleanLogic.and => expression! & child.expression,
-          BooleanLogic.or => expression! | child.expression,
-        };
-      }
+Expression combine(List<Filter> filters, BooleanLogic operator) {
+  Expression? expression;
+  for (final filter in filters) {
+    if (expression == null) {
+      expression = filter.expression;
+    } else {
+      expression = switch (operator) {
+        BooleanLogic.and => expression & filter.expression,
+        BooleanLogic.or => expression | filter.expression,
+      };
     }
-    return expression!;
   }
+  return expression!;
 }
 
 extension on PostFilter {
   Expression get expression => map(
-        createdAfter: (_) => Post.t.createdAt > value,
-        createdBefore: (_) => Post.t.createdAt < value,
-        bodyContains: (_) => Post.t.body.like('%$value%'),
+        and: (f) => combine(f.children, BooleanLogic.and),
+        or: (f) => combine(f.children, BooleanLogic.or),
+        createdAfter: (f) => Post.t.createdAt > f.value,
+        createdBefore: (f) => Post.t.createdAt < f.value,
+        bodyContains: (f) => Post.t.body.like('%${f.value}%'),
       );
 }

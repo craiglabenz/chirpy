@@ -1,4 +1,6 @@
+import 'package:chirpy_flutter/data/data.dart';
 import 'package:chirpy_shared/chirpy_shared.dart';
+import 'package:get_it/get_it.dart';
 
 abstract class ModelBindings<T> {
   const ModelBindings();
@@ -12,40 +14,49 @@ abstract class ModelBindings<T> {
   int sortDesc(T a, T b);
 }
 
-abstract class Repository<T> {
-  Repository({required this.bindings});
+abstract class Repository<T> extends DataContract<T> {
+  Repository({
+    required this.localSource,
+    required this.remoteSource,
+  }) : bindings = GetIt.I<ModelBindings<T>>();
 
   final ModelBindings<T> bindings;
-  final _localCache = <int, T>{};
+  final LocalSource<T> localSource;
+  final RemoteSource<T> remoteSource;
 
   Future<T> save(T item) async {
-    final savedItem = await persist(item);
-    _localCache[bindings.getId(savedItem)!] = savedItem;
+    final savedItem = await remoteSource.save(item);
+    localSource.save(savedItem);
     return savedItem;
   }
 
-  Future<List<T>> list([Filter? filter]) async {
-    final items = await load(filter);
-    for (final item in items) {
-      _localCache[bindings.getId(item)!] = item;
+  Future<List<T>> list([Filter<T>? filter]) async {
+    // TODO: This assumes any results are a full cache hit.
+    List<T> items = await localSource.list(filter);
+    if (items.isEmpty) {
+      print('Repo.list filter $filter');
+      items = await remoteSource.list(filter);
+      for (final item in items) {
+        localSource.save(item);
+      }
     }
     // TODO: maybe sort these when we cache and not every read
-    return _localCache.values.toList()..sort(bindings.sortDesc);
+    return items..sort(bindings.sortDesc);
   }
 
-  // TODO: actually pull from _localCache
-  DateTime? get maxCreatedAt => DateTime.now();
+  // // TODO: actually pull from _localCache
+  // DateTime? get maxCreatedAt => DateTime.now();
 
-  Future<List<T>> refresh() async {
-    final newItems = await loadRefresh();
-    for (final item in newItems) {
-      _localCache[bindings.getId(item)!] = item;
-    }
-    // TODO: maybe sort these when we cache and not every read
-    return _localCache.values.toList()..sort(bindings.sortDesc);
-  }
+  // Future<List<T>> refresh() async {
+  //   final newItems = await loadRefresh();
+  //   for (final item in newItems) {
+  //     _localCache[bindings.getId(item)!] = item;
+  //   }
+  //   // TODO: maybe sort these when we cache and not every read
+  //   return _localCache.values.toList()..sort(bindings.sortDesc);
+  // }
 
-  Future<T> persist(T item);
-  Future<List<T>> load([Filter? filter]);
-  Future<List<T>> loadRefresh();
+  // Future<T> persist(T item);
+  // Future<List<T>> load([Filter? filter]);
+  // Future<List<T>> loadRefresh();
 }

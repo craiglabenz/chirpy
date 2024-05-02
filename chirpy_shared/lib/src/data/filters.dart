@@ -6,17 +6,17 @@ part 'filters.g.dart';
 
 typedef Json = Map<String, Object?>;
 
-sealed class Filter {
+sealed class Filter<T> {
   const Filter();
 
-  bool apply(Object obj);
-  List<Object> applyToList(List<Object> objs) => objs.where(apply).toList();
+  bool apply(T obj);
+  List<T> applyToList(List<T> objs) => objs.where(apply).toList();
 
   Json toJson() => throw UnimplementedError();
 }
 
-@Freezed(genericArgumentFactories: true)
-class PostFilter extends Filter with _$PostFilter {
+@Freezed()
+class PostFilter extends Filter<Post> with _$PostFilter {
   const PostFilter._();
   const factory PostFilter.and(List<PostFilter> children) = AndPostFilter;
   const factory PostFilter.or(List<PostFilter> children) = OrPostFilter;
@@ -30,7 +30,7 @@ class PostFilter extends Filter with _$PostFilter {
       _$PostFilterFromJson(json);
 
   @override
-  bool apply(covariant Post obj) => map(
+  bool apply(Post obj) => map(
         and: (f) => f.children.every((child) => child.apply(obj)),
         or: (f) => f.children.any((child) => child.apply(obj)),
         createdAfter: (f) => obj.createdAt.difference(f.value) > Duration.zero,

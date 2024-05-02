@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:chirpy_client/chirpy_client.dart';
+import 'package:chirpy_flutter/data/data.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
@@ -32,6 +34,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   // Add cross-flavor configuration here
 
+  GetIt.I.registerSingleton<ModelBindings<Post>>(const PostBindings());
   configureDependencies();
   await GetIt.I<SessionManager>()
     ..initialize();

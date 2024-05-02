@@ -1,5 +1,6 @@
 import 'package:chirpy_client/chirpy_client.dart';
 import 'package:chirpy_flutter/data/post_repository.dart';
+import 'package:chirpy_shared/chirpy_shared.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -18,7 +19,8 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
     LoadTimelineEvent event,
     Emitter<TimelineState> emit,
   ) async {
-    final posts = await repo.list();
+    print('HELLLO?!');
+    final posts = await repo.list(PostFilter.bodyContains('here'));
     emit(
       state.copyWith(
         posts: posts,

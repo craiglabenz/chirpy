@@ -9,6 +9,7 @@ class PostEndpoint extends Endpoint {
   }
 
   Future<List<Post>> list(Session session, [PostFilter? filter]) async {
+    print('filter: $filter');
     return Post.db.find(
       session,
       where: filter != null ? (_) => filter.expression : null,

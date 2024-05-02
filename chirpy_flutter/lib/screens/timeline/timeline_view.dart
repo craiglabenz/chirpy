@@ -18,6 +18,7 @@ class _TimelinePageState extends State<TimelinePage> {
   @override
   void initState() {
     super.initState();
+    print('is anything working?');
     bloc = TimelineBloc(GetIt.I<PostRepository>(), TimelineState.initial());
     bloc.add(const TimelineEvent.load());
   }
